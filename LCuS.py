@@ -34,11 +34,12 @@ def h_func(i, k, j, m, seq):
         print(f"gamma k-1: {gamma(m, i-1, seq)}")
         print(f"gamma i-1: {gamma(m, k-1, seq)}")
         return m
-    max_a_m_j = -1
+    max_a_m_j = 0
     for r in range(gamma(m, i-1, seq), i):
         for s in range(gamma(m, k-1, seq), k):
-            if a_func(r, s, j, m, seq) > max_a_m_j:
-                max_a_m_j = a_func(r, s, j, m, seq)
+            if j <= s and r > j:
+                if a_func(r, s, j, m, seq) > max_a_m_j:
+                    max_a_m_j = a_func(r, s, j, m, seq)
     return max_a_m_j
 
-print("output:", a_func(1, 5, 4, 7, "abcdacad"))
+print("output:", a_func(3, 6, 4, 10, "abcabcabcd"))
