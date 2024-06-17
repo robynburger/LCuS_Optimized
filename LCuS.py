@@ -1,11 +1,3 @@
-# fix j and m, we want to compute a(i, k) matrices
-# outer loop over m 
-# next over j 
-# over k
-# over i 
-# use temp h value, not stored 
-#
-
 # gamma_{m}(x) is the largest value of r such that r <= x and 
 # seq[r] == seq[m], or 0 if no such value exists
 def gamma(m, x, seq):
@@ -33,3 +25,15 @@ def h_func(i, k, j, m, seq):
                 max_a_m_j = a_func(r, s, j, m, seq)
     return max_a_m_j
 
+
+# Given a sequence, seq, of length n, LCUS(seq) returns the optimal p, q values 
+# that maximize the LCS(seq[1]...seq[p], seq[p+1],...seq[q], seq[q+1]...seq[n])
+def LCuS(seq): 
+  pass
+
+
+# fix j and m, we want to compute a(i, k) matrices
+# outer loop over m 
+# next over j 
+# over k
+# over i 
