@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Burger"
+  given-names: "Robyn"
+- family-names: "Shi"
+  given-names: "Allison"
+title: "Longest Cubic Subsequence Problem"
+version: 2.0.4
+url: "https://github.com/robynburger/LCS_optimized"
