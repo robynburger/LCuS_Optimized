@@ -1,8 +1,4 @@
 # Description of LCuS
-This is our working repository as we research ways to speed up the LCuS
-algorithm, using strategies from Kosowski's 2004 paper. Our naive implementation
-can be found at https://github.com/robynburger/LCuS_Naive
-
 LCuS.py is an optimized O(n^4) approach to solving the longest cubic subsequence 
 (LCuS) problem. 
 
