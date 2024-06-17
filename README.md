@@ -3,13 +3,15 @@ LCuS.py is an optimized O(n^4) approach to solving the longest cubic subsequence
 (LCuS) problem. 
 
 For a string of characters, LCuS.py identifies the longest subsequence repeated 
-three distinct times. It finds the optimal breakpoints to seperate the string 
+three distinct times. It returns the optimal breakpoints to seperate the string 
 into three consecutive substrings, each containing an interation of the 
-subsequence. It then returns these indices and three matrices, F, D, and E. 
+subsequence. 
+
+<!-- It then returns these indices and three matrices, F, D, and E. 
 
 * Description of F
 * Description of D
-* Description of E
+* Description of E -->
 
 For more information, see paper (* citation)
 
