@@ -10,7 +10,7 @@
 # seq[r] == seq[m], or 0 if no such value exists
 def gamma(m, x, seq):
     for r in range(x, 0, -1):
-        print(f"r={r},m= {m} seq[r-1]={seq[r-1]}, seq[m-1]={seq[m-1]}")
+        # print(f"r={r},m= {m} seq[r-1]={seq[r-1]}, seq[m-1]={seq[m-1]}")
         if seq[r-1] == seq[m-1]:
             return r
     return 0
@@ -18,7 +18,7 @@ def gamma(m, x, seq):
 # assume we have a_{m-1}^{j}(i, k) 
 # for 1 to m-1
 def a_func(i, k, j, m, seq):
-    print(f"a_func entered. i: {i}, k: {k}, j: {j}, m: {m}")
+    # print(f"a_func entered. i: {i}, k: {k}, j: {j}, m: {m}")
     if seq[i-1] == seq[k-1] == seq[m-1]:
         return h_func(i, k, j, m, seq)
     if m >= 3:
@@ -29,10 +29,10 @@ def a_func(i, k, j, m, seq):
 # assume we have a_{m}^{j}(r, s) where \gamma_{m}(i-1) <= r <= i-1 and 
 # \gamma_{m}(k-1) <= s <= k-1
 def h_func(i, k, j, m, seq):
-    print(f"h_func entered. i: {i}, k: {k}, j: {j}, m: {m}")
+    # print(f"h_func entered. i: {i}, k: {k}, j: {j}, m: {m}")
     if gamma(m, i-1, seq) == 0 or gamma(m, k-1, seq) == 0:
-        print(gamma(m, i-1, seq))
-        print(gamma(m, k-1, seq))
+        print(f"gamma k-1: {gamma(m, i-1, seq)}")
+        print(f"gamma i-1: {gamma(m, k-1, seq)}")
         return m
     max_a_m_j = -1
     for r in range(gamma(m, i-1, seq), i):
@@ -41,4 +41,4 @@ def h_func(i, k, j, m, seq):
                 max_a_m_j = a_func(r, s, j, m, seq)
     return max_a_m_j
 
-print(a_func(1, 5, 4, 7, "abcdacad"))
+print("output:", a_func(1, 5, 4, 7, "abcdacad"))
