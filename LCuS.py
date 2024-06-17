@@ -10,8 +10,9 @@
 # seq[r] == seq[m], or 0 if no such value exists
 def gamma(m, x, seq):
     for r in range(x, 0, -1):
+        print(f"r={r},m= {m} seq[r-1]={seq[r-1]}, seq[m-1]={seq[m-1]}")
         if seq[r-1] == seq[m-1]:
-            return r-1
+            return r
     return 0
 
 # assume we have a_{m-1}^{j}(i, k) 
