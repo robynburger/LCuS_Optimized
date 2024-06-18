@@ -41,4 +41,4 @@ def h_func(i, k, j, m, seq):
                 curr_max = temp_max
     return curr_max
 
-print("output:", a_func(1, 5, 4, 7, "abcdacad"))
+print("output:", a_func(2, 7, 5, 9, "abcadbaby"))
