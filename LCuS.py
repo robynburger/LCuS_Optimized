@@ -6,7 +6,6 @@ import numpy as np
 # over k
 # over i 
 # use temp h value, not stored 
-#
 
 # gamma_{m}(x) is the largest value of r such that r <= x and 
 # seq[r] == seq[m], or 0 if no such value exists
@@ -44,22 +43,24 @@ def h_func(i, k, j, m, seq):
                 curr_max = temp_max
     return curr_max
 
+# returns a_func matrix for a given j and m
 def helper(j, m, seq):
-    # print(f"output: {a_func(i, k, j, m, seq)}")
     a_matrix = np.zeros((m+1, m+1), dtype=int)
+    # makes first row and column -1s to indicate that they should be ignored
     a_matrix[0] = -1
     a_matrix[:, 0] = -1
-    for a in range(1, j):
-        for b in range(j+1, m):
-            a_matrix[a, b] = a_func(a, b, j, m, seq)
+    # fill in a_matrix for appropriate values of i and k
+    for i in range(1, j):
+        for k in range(j, m):
+            a_matrix[i, k] = a_func(i, k, j, m, seq)
     return a_matrix
 
-w = "abcadbaby"
-
+# prints m and j values in heading and appropriate j and m matrices
 def print_matrices(word):
     for m in range(1, len(word)+1):
         for j in range(2, m):
             print(f"\nm: {m}, j: {j}")
             print(helper(j, m, word))
 
+w = "abcadbaby"
 print_matrices(w)
