@@ -36,6 +36,7 @@ def h_func(i, k, j, m, seq):
     curr_max = 0
     for r in range(x, i):
         for s in range(y, k):
+            # maybe this should be a(r, s, j, m-1) ?
             temp_max = a_func(r, s, j, m, seq)
             if temp_max > curr_max:
                 curr_max = temp_max
