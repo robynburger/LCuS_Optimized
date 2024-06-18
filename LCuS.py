@@ -1,3 +1,5 @@
+import numpy as np
+
 # fix j and m, we want to compute a(i, k) matrices
 # outer loop over m 
 # next over j 
@@ -42,4 +44,13 @@ def h_func(i, k, j, m, seq):
                 curr_max = temp_max
     return curr_max
 
-print("output:", a_func(2, 7, 5, 9, "abcadbaby"))
+def helper(i, k, j, m, seq):
+    # print(f"output: {a_func(i, k, j, m, seq)}")
+    a_matrix = np.zeros((m+1, m+1), dtype=int)
+    for a in range(1, j):
+        for b in range(j+1, m):
+            a_matrix[a, b] = a_func(a, b, j, m, seq)
+    print(a_matrix)
+
+
+helper(2, 7, 5, 9, "abcadbaby")
