@@ -42,9 +42,9 @@ def h_func(i, k, j, m, seq, A):
         h_1 = h_func(i-1, k, j, m, seq, A)
         h_2 = h_func(i, k-1, j, m, seq, A)
         if x == i-1:
-            h_1 = 0
+            h_1 = -1
         if y == k-1:
-            h_2 = 0
+            h_2 = -1
         return max(A[m-1, i-1, k-1], h_1, h_2)
     else:
         return 0
