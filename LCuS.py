@@ -1,13 +1,7 @@
 import numpy as np
 
-# fix j and m, we want to compute a(i, k) matrices
-# outer loop over m 
-# next over j 
-# over k
-# over i 
-# use temp h value, not stored 
 
-# gamma_{m}(x) is the largest value of r such that r <= x and 
+# gamma(m, x, seq) is the largest value of r such that r <= x and 
 # seq[r] == seq[m], or 0 if no such value exists
 
 def gamma(m, x, seq):
@@ -17,7 +11,7 @@ def gamma(m, x, seq):
     return 0
 
 # for a fixed j, populate_A produces a list of matricies, where the i^th matrix
-# corresponds to h_i^j(i, k)
+# corresponds to the value of h_i^j(i, k)
 def populate_A(A, j, seq):
     n = len(seq)
     for m in range(1, n+1):
@@ -30,10 +24,8 @@ def populate_A(A, j, seq):
                         A[m, i, k] = min(A[m-1, i, k], h_func(i, k, j, m-1, seq, A))
     return A
 
-# assume we have a_{m}^{j}(r, s) where \gamma_{m}(i-1) <= r <= i-1 and 
-# \gamma_{m}(k-1) <= s <= k-1
+# h_func(i, k, j, m, seq, A) recursively calculates the value of h_m^j(i, k)
 def h_func(i, k, j, m, seq, A):
-    # print(f"h_func entered. i: {i}, k: {k}, j: {j}, m: {m}")
     if i >= 1 and i < j and j <= k and k < m:
         g_i = gamma(m, i-1, seq)
         g_k = gamma(m, k-1, seq)
@@ -49,8 +41,9 @@ def h_func(i, k, j, m, seq, A):
     else:
         return 0
 
-# returns a_func matrix for a given j and m
-def helper(j, seq):
+# print_A(j, seq) prints an n by n matrix for each value of m, which holds the 
+# values of a_m^j(i, k) for a fixed j
+def print_A(j, seq):
     n = len(seq)
     A = populate_A(np.zeros((n+1, n+1, n+1), dtype=int), j, seq)
     # print(A)
@@ -58,7 +51,7 @@ def helper(j, seq):
         print(f"m = {m} \n {str(A[m])}")
 
 
-helper(3, "ababab")
+print_A(3, "ababab")
 
 
 
