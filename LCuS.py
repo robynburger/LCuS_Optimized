@@ -48,7 +48,7 @@ def print_A(j, seq):
     A = populate_A(np.zeros((n+1, n+1, n+1), dtype=int), j, seq)
     # print(A)
     for m in range(len(A)):
-        print(f"m = {m} \n {str(A[m])}")
+        print(f"m = {m} \n{str(A[m])}")
 
 
 print_A(3, "ababab")
