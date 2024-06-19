@@ -1,4 +1,16 @@
+import os
 import numpy as np
+
+'''
+HOW TO USE THIS DRAFT: 
+
+In final line:  'print_A(3, "ababab")', replace '3' with your j-value and 
+"ababab" with your sequence. 
+
+Your results will be in results/sequence/j.txt So, the output of 
+'print_A(3, "ababab")' would be found in results/ababab/3.txt
+
+'''
 
 
 # gamma(m, x, seq) is the largest value of r such that r <= x and 
@@ -16,10 +28,11 @@ def populate_A(A, j, seq):
     for m in range(1, n+1):
         for i in range(1, m+1):
             for k in range(j, m+1):
-                if 1 <= i and i < j and j <= k and k < m:
-                    if seq[i-1] == seq[k-1] == seq[m-1]:
-                        A[m, i, k] = h_func(i, k, j, m-1, seq, A)
-                    else:
+                if not(1 <= i and i < j and j <= k and k < m):
+                     A[m, i, k] = 101 # high value that will never be the min
+                elif seq[i-1] == seq[k-1] == seq[m-1]:
+                    A[m, i, k] = h_func(i, k, j, m-1, seq, A)
+                else:
                         A[m, i, k] = min(A[m-1, i, k], h_func(i, k, j, m-1, seq, A))
     return A
 
@@ -47,11 +60,28 @@ def print_A(j, seq):
     n = len(seq)
     A = populate_A(np.zeros((n+1, n+1, n+1), dtype=int) + 100, j, seq)
     # print(A)
-    for m in range(len(A)):
-        print(f"m = {m} \n{str(A[m])}")
+    file_name = str(f"results/{seq}/{j}.txt")
+    os.makedirs(os.path.dirname(file_name), exist_ok=True)
+    file = open(file_name, "w")
+    # display string and i, j, k, l, m parameters
+    file.write("\n Note: top row and left column are buffers to account for 1-based indexing")
+    file.write("\n and values of 100 are null\n\n")
+    file.write(f"\ns = {seq}\n")
+    file.write(f"j = {j}\n\n")
 
+    eq_signs = (len(seq)+10) * "="
+    file.write(f"{eq_signs} A {eq_signs}\n")
+    for m in range(1, len(A)): # change this line if you want m = 0 matrix to print 
+        file.write(f"\n\nm = {m} \n{str(A[m])}") 
+    file.close()
+    
 
+'''
+EDIT THE LINE BELOW TO RUN THE PROGRAM:
+'''
 print_A(3, "ababab")
+
+  
 
 
 
