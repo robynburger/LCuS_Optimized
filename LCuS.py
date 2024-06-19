@@ -25,26 +25,27 @@ def populate_A(A, j, seq):
 
 # h_func(i, k, j, m, seq, A) recursively calculates the value of h_m^j(i, k)
 def h_func(i, k, j, m, seq, A):
-    if i >= 1 and i < j and j <= k and k < m:
-        g_i = gamma(m, i-1, seq)
-        g_k = gamma(m, k-1, seq)
-        if g_i < 1 or g_k <= i:
-            return m
-        h_i = h_func(i-1, k, j, m, seq, A)
-        h_k = h_func(i, k-1, j, m, seq, A)
-        if g_i == i-1:
-            h_i = -1
-        if g_k == k-1:
-            h_k = -1
-        return max(A[m-1, i-1, k-1], h_i, h_k)
-    else:
-        return 0
+    # if i >= 1 and i < j and j <= k and k < m:
+    g_i = gamma(m, i-1, seq)
+    g_k = gamma(m, k-1, seq)
+    if g_i < 1 or g_k <= i:
+        return m
+    h_i = h_func(i-1, k, j, m, seq, A)
+    h_k = h_func(i, k-1, j, m, seq, A)
+    if g_i == i-1:
+        h_i = -1
+    if g_k == k-1:
+        h_k = -1
+    return max(A[m-1, i-1, k-1], h_i, h_k)
+    
+    #else:
+        #return 0
 
 # print_A(j, seq) prints an n by n matrix for each value of m, which holds the 
 # values of a_m^j(i, k) for a fixed j
 def print_A(j, seq):
     n = len(seq)
-    A = populate_A(np.zeros((n+1, n+1, n+1), dtype=int), j, seq)
+    A = populate_A(np.zeros((n+1, n+1, n+1), dtype=int) + 100, j, seq)
     # print(A)
     for m in range(len(A)):
         print(f"m = {m} \n{str(A[m])}")
