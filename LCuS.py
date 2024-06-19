@@ -37,16 +37,15 @@ def h_func(i, k, j, m, seq, A):
     if i >= 1 and i < j and j <= k and k < m:
         x = gamma(m, i-1, seq)
         y = gamma(m, k-1, seq)
-        if x < 0 or y <= i:
+        if x < 1 or y <= i:
             return m
-        elif x < i-1:
-            if y < k-1:
-                return A[m-1, i-1, k-1]
-            return max(A[m-1, i-1, k-1], h_func(i-1, k, j, m, seq, A))
-        elif y < k-1:
-            return max(A[m-1, i-1, k-1], h_func(i, k-1, j, m, seq, A))
-        else:
-            return max(A[m-1, i-1, k-1], h_func(i-1, k, j, m, seq, A), h_func(i, k-1, j, m, seq, A))
+        h_1 = h_func(i-1, k, j, m, seq, A)
+        h_2 = h_func(i, k-1, j, m, seq, A)
+        if x == i-1:
+            h_1 = 0
+        if y == k-1:
+            h_2 = 0
+        return max(A[m-1, i-1, k-1], h_1, h_2)
     else:
         return 0
 
