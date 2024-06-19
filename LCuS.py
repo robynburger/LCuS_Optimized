@@ -16,14 +16,14 @@ def gamma(m, x, seq):
             return r
     return 0
 
-# assume we have a_{m-1}^{j}(i, k) 
-# for 1 to m-1
+# for a fixed j, populate_A produces a list of matricies, where the i^th matrix
+# corresponds to h_i^j(i, k)
 def populate_A(A, j, seq):
     n = len(seq)
     for m in range(1, n+1):
         for i in range(1, m+1):
             for k in range(j, m+1):
-                if i >= 1 and i < j and j <= k and k < m:
+                if 1 <= i and i < j and j <= k and k < m:
                     if seq[i-1] == seq[k-1] == seq[m-1]:
                         A[m, i, k] = h_func(i, k, j, m-1, seq, A)
                     else:
@@ -35,28 +35,42 @@ def populate_A(A, j, seq):
 def h_func(i, k, j, m, seq, A):
     # print(f"h_func entered. i: {i}, k: {k}, j: {j}, m: {m}")
     if i >= 1 and i < j and j <= k and k < m:
-        x = gamma(m, i-1, seq)
-        y = gamma(m, k-1, seq)
-        if x < 1 or y <= i:
+        g_i = gamma(m, i-1, seq)
+        g_k = gamma(m, k-1, seq)
+        if g_i < 1 or g_k <= i:
             return m
-        h_1 = h_func(i-1, k, j, m, seq, A)
-        h_2 = h_func(i, k-1, j, m, seq, A)
-        if x == i-1:
-            h_1 = -1
-        if y == k-1:
-            h_2 = -1
-        return max(A[m-1, i-1, k-1], h_1, h_2)
+        h_i = h_func(i-1, k, j, m, seq, A)
+        h_k = h_func(i, k-1, j, m, seq, A)
+        if g_i == i-1:
+            h_i = -1
+        if g_k == k-1:
+            h_k = -1
+        return max(A[m-1, i-1, k-1], h_i, h_k)
     else:
         return 0
 
 # returns a_func matrix for a given j and m
 def helper(j, seq):
     n = len(seq)
-    empty_A = np.zeros((n+1, n+1, n+1), dtype=int)        # dimensions i, k, m
-    A_tensor = populate_A(empty_A, j, seq)
-    print(A_tensor)
+    A = populate_A(np.zeros((n+1, n+1, n+1), dtype=int), j, seq)
+    # print(A)
+    for m in range(len(A)):
+        print(f"m = {m} \n {str(A[m])}")
 
-helper(5, "abcadbaby")
+
+helper(3, "ababab")
+
+
+
+
+
+
+
+
+
+
+
+
 
 """
 # assume we have a_{m-1}^{j}(i, k) 
@@ -110,6 +124,6 @@ def print_matrices(word):
             print(helper(j, m, word))
 
 """
-w = "abcadbaby"
+# w = "abcadbaby"
 # print_matrices(w)
 
