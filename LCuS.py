@@ -18,30 +18,30 @@ def gamma(m, x, seq):
 # assume we have a_{m-1}^{j}(i, k) 
 # for 1 to m-1
 def a_func(i, k, j, m, seq):
-    # print(f"a_func entered. i: {i}, k: {k}, j: {j}, m: {m}")
-    if 1 <= i and i < j and j <= k and k < m:
+    print(f"a_func entered. i: {i}, k: {k}, j: {j}, m: {m}")
+    if i >= 1 and i < j and j <= k and k < m:
         if seq[i-1] == seq[k-1] == seq[m-1]:
-            return h_func(i, k, j, m, seq)
-        return min(a_func(i, k, j, m-1, seq), h_func(i, k, j, m, seq))
+            return h_func(i, k, j, m-1, seq)
+        return min(a_func(i, k, j, m-1, seq), h_func(i, k, j, m-1, seq))
     else:
         return 0
 
 # assume we have a_{m}^{j}(r, s) where \gamma_{m}(i-1) <= r <= i-1 and 
 # \gamma_{m}(k-1) <= s <= k-1
 def h_func(i, k, j, m, seq):
-    # print(f"h_func entered. i: {i}, k: {k}, j: {j}, m: {m}")
+    print(f"h_func entered. i: {i}, k: {k}, j: {j}, m: {m}")
     x = gamma(m, i-1, seq)
     y = gamma(m, k-1, seq)
-    if x == 0 or y == 0:
+    if x < 0 or y <= i:
         return m
-    curr_max = 0
-    for r in range(x, i):
-        for s in range(y, k):
-            # maybe this should be a(r, s, j, m-1) ?
-            temp_max = a_func(r, s, j, m-1, seq)
-            if temp_max > curr_max:
-                curr_max = temp_max
-    return curr_max
+    elif x < i-1:
+        if y < k-1:
+            return a_func(i-1, k-1, j, m-1, seq)
+        return max(a_func(i-1, k-1, j, m-1, seq), h_func(i-1, k, j, m, seq))
+    elif y < k-1:
+        return max(a_func(i-1, k-1, j, m-1, seq), h_func(i, k-1, j, m, seq))
+    else:
+        return max(a_func(i-1, k-1, j, m-1, seq), h_func(i-1, k, j, m, seq), h_func(i, k-1, j, m, seq))
 
 # returns a_func matrix for a given j and m
 def helper(j, m, seq):
@@ -63,4 +63,5 @@ def print_matrices(word):
             print(helper(j, m, word))
 
 w = "abcadbaby"
-print_matrices(w)
+print(a_func(2, 7, 5, 9, w))
+# print_matrices(w)
