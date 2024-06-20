@@ -31,11 +31,11 @@ def populate_A(A, j, seq):
                 if 1 <= i and i < j and j <= k and k < m:
                         #  A[m, i, k] = 101 # high value that will never be the min
                     if seq[i-1] == seq[k-1] == seq[m-1]:
-                        A[m, i, k] = h_func(i, k, j, m-1, seq, A)
+                        A[m, i, k] = h_func(i, k, j, m, seq, A)
                     elif k == m-1:
                         A[m, i, k] = k
                     else:
-                        A[m, i, k] = min(A[m-1, i, k], h_func(i, k, j, m-1, seq, A))
+                        A[m, i, k] = min(A[m-1, i, k], h_func(i, k, j, m, seq, A))
     return A
 
 # h_func(i, k, j, m, seq, A) recursively calculates the value of h_m^j(i, k)
