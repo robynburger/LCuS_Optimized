@@ -27,12 +27,14 @@ def populate_A(A, j, seq):
     n = len(seq)
     for m in range(1, n+1):
         for i in range(1, m+1):
-            for k in range(j, m+1):
-                if not(1 <= i and i < j and j <= k and k < m):
-                     A[m, i, k] = 101 # high value that will never be the min
-                elif seq[i-1] == seq[k-1] == seq[m-1]:
-                    A[m, i, k] = h_func(i, k, j, m-1, seq, A)
-                else:
+            for k in range(j, m):
+                if 1 <= i and i < j and j <= k and k < m:
+                        #  A[m, i, k] = 101 # high value that will never be the min
+                    if seq[i-1] == seq[k-1] == seq[m-1]:
+                        A[m, i, k] = h_func(i, k, j, m-1, seq, A)
+                    elif k == m-1:
+                        A[m, i, k] = k
+                    else:
                         A[m, i, k] = min(A[m-1, i, k], h_func(i, k, j, m-1, seq, A))
     return A
 
@@ -79,7 +81,7 @@ def print_A(j, seq):
 '''
 EDIT THE LINE BELOW TO RUN THE PROGRAM:
 '''
-print_A(3, "ababab")
+print_A(5, "abcadbaby")
 
   
 
