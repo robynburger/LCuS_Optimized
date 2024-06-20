@@ -26,16 +26,16 @@ def gamma(m, x, seq):
 def populate_A(A, j, seq):
     n = len(seq)
     for m in range(1, n+1):
-        for i in range(1, m+1):
+        for i in range(1, j):
             for k in range(j, m):
-                if 1 <= i and i < j and j <= k and k < m:
-                        #  A[m, i, k] = 101 # high value that will never be the min
-                    if seq[i-1] == seq[k-1] == seq[m-1]:
-                        A[m, i, k] = h_func(i, k, j, m, seq, A)
-                    elif k == m-1:
-                        A[m, i, k] = k
-                    else:
-                        A[m, i, k] = min(A[m-1, i, k], h_func(i, k, j, m, seq, A))
+                # if 1 <= i and i < j and j <= k and k < m:
+                # [m, i, k] = 101 # high value that will never be the min
+                if seq[i-1] == seq[k-1] == seq[m-1]:
+                    A[m, i, k] = h_func(i, k, j, m, seq, A)
+                elif k == m-1:
+                    A[m, i, k] = k
+                else:
+                    A[m, i, k] = min(A[m-1, i, k], h_func(i, k, j, m, seq, A))
     return A
 
 # h_func(i, k, j, m, seq, A) recursively calculates the value of h_m^j(i, k)
