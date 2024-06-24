@@ -27,6 +27,17 @@ def test(seq):
                             print(f"d[{m}, {j}, {i}, {k}, {l}] = 1")
                     if A[m,j,i,k] > 0:
                         print(f"A[{m}, {j}, {i}, {k}] = {A[m,j,i,k]}")
+    
+    # O(n^4) implementation below
+    h = np.zeros((n+1, n+1, n+1, n+1), dtype=int)   # h[m,j,i,k]
+    a = np.zeros((n+1, n+1, n+1, n+1), dtype=int)   # a[m,j,i,k]
+    for m in range(1, n+1):
+        for j in range(1, m):
+            # compute h
+            for i in range(1, j):
+                for k in range(j, m):
+                    print("hello")
+
 
 test("abcadbabcabyc")
 
