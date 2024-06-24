@@ -38,7 +38,7 @@ def test(seq):
             for i in range(1, j):
                 for k in range(j, m):
                     # if (i-1 < 1 and k-1 < j) or (gamma(m,i-1,seq) < 1 and gamma(m,k-1,seq) < j):
-                    #     h[m, j, i,k] = m
+                    #     h[m, j, i, k] = m
                     # else:
                         if (i-1 < 1) or (k-1 < j) or (gamma(m, i-1, seq) < 1) or (gamma(m, k-1, seq) < j):
                             h[m, j, i, k] = m
