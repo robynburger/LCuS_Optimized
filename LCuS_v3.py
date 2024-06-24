@@ -62,10 +62,12 @@ def test(seq):
                       a[m, j, i, k] = min(a[m-1, j, i, k], h[m, j, i, k])
                     else: 
                       a[m, j, i, k] = 0
-                    if a[m, j, i, k] > 0:
-                       print(f"a[{m}, {j}, {i}, {k}] = {a[m, j, i, k]}")
 
-                    
+                    print(f"a[{m}, {j}, {i}, {k}] = {a[m, j, i, k]}")
+                    if a[m,j,i,k] != A[m,j,i,k]:
+                        print(f"    error: should be {A[m,j,i,k]}")
+                        print(f"    s_i = {seq[i-1]}, s_k = {seq[k-1]}, s_m = {seq[m-1]}")
+                        print(f"    gamma(m, i-1) = {gamma(m,i-1,seq)}, gamma(m, k-1) = {gamma(m,k-1,seq)}")            
 
 test("abcadbabcabyc")
 
