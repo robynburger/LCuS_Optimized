@@ -37,10 +37,10 @@ def test(seq):
             for i in range(1, j):
                 for k in range(j, m):
                     if (i-1 < 1 and k-1 < j) or (gamma(m,i-1,seq) < 1 and gamma(m,k-1,seq) < j):
-                        h[m,i,j,k] = m
+                        h[m, j, i,k] = m
                     else:
                         if (i-1 < 1) or (k-1 < j) or (gamma(m,i-1,seq) < 1) or (gamma(m,k-1,seq) < j):
-                            h[m,i,j,k] = 0
+                            h[m, j, i,k] = 0
                         else:
                             maximum = a[m-1,j,i-1,k-1]
                             if gamma(m,i-1,seq) < i-1:
@@ -52,8 +52,19 @@ def test(seq):
                                 print(f"h[{m}, {j}, {i}, {k}] = {h[m, j, i, k]}")
 
             # compute a
+            # not checking if a_m-1^j(i, k) is properly defined b/c 
+            # m starts at 1 and m = 0 is defined in tensor as 0 
             for i in range(1, j):
                 for k in range(j, m):
+                    if seq[i-1] == seq[k-1] == seq[m-1]:
+                      a[m, j, i, k] = h[m, j, i, k]
+                    elif seq[i-1] == seq[k-1]:
+                      a[m, j, i, k] = min(a[m-1, j, i, k], h[m, j, i, k])
+                    else: 
+                      a[m, j, i, k] = 0
+                    if a[m, j, i, k] > 0:
+                       print(f"a[{m}, {j}, {i}, {k}] = {a[m, j, i, k]}")
+
                     
 
 test("abcadbabcabyc")
