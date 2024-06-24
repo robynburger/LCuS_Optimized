@@ -1,4 +1,5 @@
-## File that will hold new algorithm with modified outputs 
+## inspired by Adiesha's new definition from 6/
+# File that will hold new algorithm with modified outputs 
 
 import numpy as np
 
@@ -24,9 +25,9 @@ def test(seq):
                             f[m,j,i,k,l] = max(f[m,j,i,k,l], f[m-1,j,gamma(m,i,seq)-1, gamma(m,k,seq)-1,l]+1)
                         if f[m,j,i,k,l] > f[m,j,i-1,k-1,l] and seq[i-1] == seq[k-1]:
                             A[m,j,i,k] = l
-                            print(f"d[{m}, {j}, {i}, {k}, {l}] = 1")
-                    if A[m,j,i,k] > 0:
-                        print(f"A[{m}, {j}, {i}, {k}] = {A[m,j,i,k]}")
+                            #print(f"d[{m}, {j}, {i}, {k}, {l}] = 1")
+                    #if A[m,j,i,k] > 0:
+                        #print(f"A[{m}, {j}, {i}, {k}] = {A[m,j,i,k]}")
     
     # O(n^4) implementation below
     h = np.zeros((n+1, n+1, n+1, n+1), dtype=int)   # h[m,j,i,k]
@@ -36,11 +37,11 @@ def test(seq):
             # compute h
             for i in range(1, j):
                 for k in range(j, m):
-                    if (i-1 < 1 and k-1 < j) or (gamma(m,i-1,seq) < 1 and gamma(m,k-1,seq) < j):
-                        h[m, j, i,k] = m
-                    else:
+                    # if (i-1 < 1 and k-1 < j) or (gamma(m,i-1,seq) < 1 and gamma(m,k-1,seq) < j):
+                    #     h[m, j, i,k] = m
+                    # else:
                         if (i-1 < 1) or (k-1 < j) or (gamma(m,i-1,seq) < 1) or (gamma(m,k-1,seq) < j):
-                            h[m, j, i,k] = 0
+                            h[m, j, i,k] = m
                         else:
                             maximum = a[m-1,j,i-1,k-1]
                             if gamma(m,i-1,seq) < i-1:
@@ -48,8 +49,8 @@ def test(seq):
                             if gamma(m,k-1,seq) < k-1:
                                 maximum = max(maximum, h[m, j, i, k-1])
                             h[m,j,i,k] = maximum
-                            if h[m,j,i,k] > 0:
-                                print(f"h[{m}, {j}, {i}, {k}] = {h[m, j, i, k]}")
+                            #if h[m,j,i,k] > 0:
+                                #print(f"h[{m}, {j}, {i}, {k}] = {h[m, j, i, k]}")
 
             # compute a
             # not checking if a_m-1^j(i, k) is properly defined b/c 
@@ -59,7 +60,10 @@ def test(seq):
                     if seq[i-1] == seq[k-1] == seq[m-1]:
                       a[m, j, i, k] = h[m, j, i, k]
                     elif seq[i-1] == seq[k-1]:
+                    #   print("si = sk")
                       a[m, j, i, k] = min(a[m-1, j, i, k], h[m, j, i, k])
+                    #   print(f"a[{m-1}, {j}, {i}, {k}] = {a[m-1, j, i, k]}")
+                    #   print(f"h[{m}, {j}, {i}, {k}] = {h[m, j, i, k]}")
                     else: 
                       a[m, j, i, k] = 0
 
