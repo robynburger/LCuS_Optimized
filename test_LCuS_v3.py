@@ -1,6 +1,9 @@
 import os
 import numpy as np
+import LCuS_v3 as test_file
 
+seq = "aaaaa"
+test_A = test_file.test(seq)
 
 """
 Naive implementation of LCuS that tests definitions from 6/24
@@ -64,7 +67,7 @@ def gen_F(T, j, m):
 # Note: the leftmost column and top row correspond to i=0 and k=0, respectively, 
 # so the leftmost column and top row will always consist entirely of 0s.
 '''
-def gen_D(T, j, m):
+def gen_D(T, j, m, s):
   F_list = gen_F(T, j, m)
   D_list = []
   for l in range(2, m+1):
@@ -101,26 +104,29 @@ def gen_A(D_list, j, m):
 # a folder named after the given string and which has a file name consisting of 
 # the j, l, m parameters. 
 '''
-def LCuS(s, ideal, j, m):
+def LCuS(s):
   n = len(s)
   empty_T = np.zeros((n+1, n+1, n+1, n+1, n+1), dtype=int)
   # populate values of tensor T
   T = populate_T(empty_T, s)
   # extracts the largest tuple (p, q) s.t. T[n][p][p+1][q][q+1] is maximized
-  p, q = find_pq(T, n)[-1]
+  # p, q = find_pq(T, n)[-1]
 
-  # select ideal j, l, m parameters
-  if ideal:
-    j = (int)(p+1)
-  # otherwise takes user-inputted parameters
+  print("\nTESTING\n")
   
-  # generate f, d, and e two-dimensional matrices for fixed j, l, m
-  params = (T, j, m)
-  F = gen_F(*params) 
-  D = gen_D(*params)
-  A = gen_A(D, j, m)
-  # print(A)
+  for m in range(1, n+1):
+    for j in range(1, m):
+      params = (T, j, m, s)
+      D = gen_D(*params)
+      A = gen_A(D, j, m)
+      for i in range (1, j): 
+        for k in range(j, m): 
+          if test_A[m, j, i, k] != A[i, k]:
+            print(f"error, should be {A[i, k]}")
+          else:
+            print(f"A[{m}, {j}, {i}, {k}] = {test_A[m,j,i,k]}")
 
+  """
   # write to file named after j, l, m params and stored in folder named after string
   file_name = str(f"results_v2/{s}/{j}_{m}.txt")
   # folder is named after the string
@@ -193,6 +199,9 @@ print(f"\nEnter positive integer {j} < m <= {len(s)}.")
 m = check_input("m", j, len(s) + 1)
 # otherwise user wants to use ideal parameters
 
+"""
+
 
 # write parameters and matrices to a text file
-LCuS(s, ideal, j, m)
+s = "aaaaa"
+LCuS(s)
