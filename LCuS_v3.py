@@ -11,7 +11,8 @@ def gamma(m, x, seq):
             return r
     return 0
 
-def test(seq):
+# O(n^5) implementation
+def naive(seq):
     n = len(seq)
     f = np.zeros((n+1, n+1, n+1, n+1, n+1), dtype=int)      # f[m,j,i,k,l]
     A = np.zeros((n+1, n+1, n+1, n+1), dtype=int)      # A[m,j,i,k]
@@ -28,8 +29,11 @@ def test(seq):
                             #print(f"d[{m}, {j}, {i}, {k}, {l}] = 1")
                     #if A[m,j,i,k] > 0:
                         #print(f"A[{m}, {j}, {i}, {k}] = {A[m,j,i,k]}")
-    
-    # O(n^4) implementation below
+    return A
+
+# O(n^4) implementation
+def optimized(seq):
+    n = len(seq)
     h = np.zeros((n+1, n+1, n+1, n+1), dtype=int)   # h[m,j,i,k]
     a = np.zeros((n+1, n+1, n+1, n+1), dtype=int)   # a[m,j,i,k]
     for m in range(1, n+1):
@@ -66,13 +70,22 @@ def test(seq):
                     #   print(f"h[{m}, {j}, {i}, {k}] = {h[m, j, i, k]}")
                     else: 
                       a[m, j, i, k] = 0
+    return a           
 
-                    print(f"a[{m}, {j}, {i}, {k}] = {a[m, j, i, k]}")
-                    if a[m, j, i, k] != A[m, j, i, k]:
-                        print(f"    error: should be {A[m, j, i, k]}")
+def test(seq):
+    n = len(seq)
+    naive_A = naive(seq)
+    optimized_A = optimized(seq)
+    for m in range(1, n+1):
+        for j in range(1, m):
+            # compute h
+            for i in range(1, j):
+                for k in range(j, m):
+                    if naive_A[m, j, i, k] != optimized_A[m, j, i, k]:
+                        print(f"    error, should be {naive_A[m, j, i, k]}")
                         print(f"    s_i = {seq[i-1]}, s_k = {seq[k-1]}, s_m = {seq[m-1]}")
-                        print(f"    gamma(m, i-1) = {gamma(m, i-1, seq)}, gamma(m, k-1) = {gamma(m, k-1, seq)}")
-    return A            
+                        print(f"    gamma(m, i-1) = {gamma(m, i-1)}");
+                        print(f"    gamma(m, k-1) = {gamma(m, k-1)}");
 
 test("aaaaaa")
 
