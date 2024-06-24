@@ -1,4 +1,4 @@
-## inspired by Adiesha's new definition from 6/
+## inspired by Adiesha's new definition from 6/24
 # File that will hold new algorithm with modified outputs 
 
 import numpy as np
