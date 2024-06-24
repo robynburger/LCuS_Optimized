@@ -1,7 +1,7 @@
 # inspired by bmumey
 import numpy as np
 
-seq = "abcadbaby"
+seq = "aabdaibxbabb"
 
 def gamma(m, x):
     for r in range(x, 0, -1):

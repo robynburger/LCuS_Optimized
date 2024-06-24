@@ -32,26 +32,35 @@ def populate_A(A, j, seq):
                 # [m, i, k] = 101 # high value that will never be the min
                 if seq[i-1] == seq[k-1] == seq[m-1]:
                     A[m, i, k] = h_func(i, k, j, m, seq, A)
-                elif k == m-1:
-                    A[m, i, k] = k
+                elif seq[i-1] == seq[k-1]:
+                    A[m, i, k] = 0 if A[m-1, i, k] == 100 else min(A[m-1, i, k], h_func(i, k, j, m, seq, A))
                 else:
-                    A[m, i, k] = min(A[m-1, i, k], h_func(i, k, j, m, seq, A))
+                    A[m, i, k] = 0
     return A
 
 # h_func(i, k, j, m, seq, A) recursively calculates the value of h_m^j(i, k)
 def h_func(i, k, j, m, seq, A):
     # if i >= 1 and i < j and j <= k and k < m:
+
     g_i = gamma(m, i-1, seq)
     g_k = gamma(m, k-1, seq)
-    if g_i < 1 or g_k <= i:
+    if ((i-1 < 1) != (k-1 < j)) or ((g_i < 1) != (g_k < j)):
+        return 0
+    if ((i-1 < 1) and (k-1 < j)) or ((g_i < 1) and (g_k < j)):
         return m
-    h_i = h_func(i-1, k, j, m, seq, A)
-    h_k = h_func(i, k-1, j, m, seq, A)
-    if g_i == i-1:
-        h_i = -1
-    if g_k == k-1:
-        h_k = -1
-    return max(A[m-1, i-1, k-1], h_i, h_k)
+    h_max = 0
+    for r in range(g_i, i):
+        for s in range(g_k, k):
+            if h_max < A[m-1, r, s]:
+                h_max = A[m-1, r, s]
+    return h_max
+    # h_i = h_func(i-1, k, j, m, seq, A)
+    # h_k = h_func(i, k-1, j, m, seq, A)
+    # if g_i == i-1:
+    #     h_i = -1
+    # if g_k == k-1:
+    #     h_k = -1
+    # return max(A[m-1, i-1, k-1], h_i, h_k)
     
     #else:
         #return 0
@@ -81,7 +90,7 @@ def print_A(j, seq):
 '''
 EDIT THE LINE BELOW TO RUN THE PROGRAM:
 '''
-print_A(5, "abcadbaby")
+print_A(7, "abcadbabcabyc")
 
   
 
