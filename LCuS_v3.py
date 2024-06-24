@@ -20,11 +20,11 @@ def test(seq):
             for j in range(i+1, n+1):
                 for k in range(j, n+1):
                     for l in range(k+1, m+1):
-                        f[m,j,i,k,l] = f[m - 1,j,i,k,l]
-                        if gamma(m,i,seq) > 0 and gamma(m,k,seq) >= j:
-                            f[m,j,i,k,l] = max(f[m,j,i,k,l], f[m-1,j,gamma(m,i,seq)-1, gamma(m,k,seq)-1,l]+1)
-                        if f[m,j,i,k,l] > f[m,j,i-1,k-1,l] and seq[i-1] == seq[k-1]:
-                            A[m,j,i,k] = l
+                        f[m, j, i, k, l] = f[m - 1, j, i, k, l]
+                        if gamma(m, i, seq) > 0 and gamma(m, k, seq) >= j:
+                            f[m, j, i, k, l] = max(f[m, j, i, k, l], f[m-1, j, gamma(m, i, seq)-1, gamma(m, k, seq)-1, l]+1)
+                        if f[m, j, i, k, l] > f[m, j, i-1, k-1, l] and seq[i-1] == seq[k-1]:
+                            A[m, j, i, k] = l
                             #print(f"d[{m}, {j}, {i}, {k}, {l}] = 1")
                     #if A[m,j,i,k] > 0:
                         #print(f"A[{m}, {j}, {i}, {k}] = {A[m,j,i,k]}")
@@ -40,15 +40,15 @@ def test(seq):
                     # if (i-1 < 1 and k-1 < j) or (gamma(m,i-1,seq) < 1 and gamma(m,k-1,seq) < j):
                     #     h[m, j, i,k] = m
                     # else:
-                        if (i-1 < 1) or (k-1 < j) or (gamma(m,i-1,seq) < 1) or (gamma(m,k-1,seq) < j):
-                            h[m, j, i,k] = m
+                        if (i-1 < 1) or (k-1 < j) or (gamma(m, i-1, seq) < 1) or (gamma(m, k-1, seq) < j):
+                            h[m, j, i, k] = m
                         else:
-                            maximum = a[m-1,j,i-1,k-1]
-                            if gamma(m,i-1,seq) < i-1:
+                            maximum = a[m-1, j, i-1, k-1]
+                            if gamma(m, i-1, seq) < i-1:
                                 maximum = max(maximum, h[m, j, i-1, k])
-                            if gamma(m,k-1,seq) < k-1:
+                            if gamma(m, k-1, seq) < k-1:
                                 maximum = max(maximum, h[m, j, i, k-1])
-                            h[m,j,i,k] = maximum
+                            h[m, j, i, k] = maximum
                             #if h[m,j,i,k] > 0:
                                 #print(f"h[{m}, {j}, {i}, {k}] = {h[m, j, i, k]}")
 
@@ -68,10 +68,10 @@ def test(seq):
                       a[m, j, i, k] = 0
 
                     print(f"a[{m}, {j}, {i}, {k}] = {a[m, j, i, k]}")
-                    if a[m,j,i,k] != A[m,j,i,k]:
-                        print(f"    error: should be {A[m,j,i,k]}")
+                    if a[m, j, i, k] != A[m, j, i, k]:
+                        print(f"    error: should be {A[m, j, i, k]}")
                         print(f"    s_i = {seq[i-1]}, s_k = {seq[k-1]}, s_m = {seq[m-1]}")
-                        print(f"    gamma(m, i-1) = {gamma(m,i-1,seq)}, gamma(m, k-1) = {gamma(m,k-1,seq)}")            
+                        print(f"    gamma(m, i-1) = {gamma(m, i-1, seq)}, gamma(m, k-1) = {gamma(m, k-1, seq)}")            
 
-test("abcadbabcabyc")
+test("aaaaaa")
 
