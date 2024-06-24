@@ -1,13 +1,18 @@
 import os
 import numpy as np
 import LCuS_v3 as test_file
+import random 
 
-seq = "aaaaa"
+"""
+Tests 
+"""
+
+alphabet = ['a', 'b', 'c', 'd', 'x', 'y']
+seq = ""
+for _ in range(random.randint(3, 30)):
+  seq += str(random.choice(alphabet))
+
 test_A = test_file.test(seq)
-
-"""
-Naive implementation of LCuS that tests definitions from 6/24
-"""
 
 
 '''
@@ -112,7 +117,7 @@ def LCuS(s):
   # extracts the largest tuple (p, q) s.t. T[n][p][p+1][q][q+1] is maximized
   # p, q = find_pq(T, n)[-1]
 
-  print("\nTESTING\n")
+  print(f"\nTESTING {seq}\n")
   
   for m in range(1, n+1):
     for j in range(1, m):
@@ -123,85 +128,12 @@ def LCuS(s):
         for k in range(j, m): 
           if test_A[m, j, i, k] != A[i, k]:
             print(f"error, should be {A[i, k]}")
-          else:
-            print(f"A[{m}, {j}, {i}, {k}] = {test_A[m,j,i,k]}")
+          # else:
+          #   print(f"A[{m}, {j}, {i}, {k}] = {test_A[m,j,i,k]}")
 
-  """
-  # write to file named after j, l, m params and stored in folder named after string
-  file_name = str(f"results_v2/{s}/{j}_{m}.txt")
-  # folder is named after the string
-  os.makedirs(os.path.dirname(file_name), exist_ok=True)
-  file = open(file_name, "w")
-  # display string and i, j, k, l, m parameters
-  file.write(f"s = {s}\n\n")
-  file.write(f"j = {j}\n")
-  file.write(f"m = {m}\n\n")
-
-  file.write(f"i is in range [1, {j})\n")
-  file.write(f"k is in range [{j}, l)\n")
-  file.write(f"l is in range [2, {m})\n\n")
-
-  # display the substrings that would result from the split from the j, l, m values
-  # file.write(f"substrings: {s[0:j-1]}, {s[j-1:l-1]}, {s[l-1:m]}\n\n")
-  # indicate the values of p and q if ideal parameters are requested
-  file.write(f"\tp = {p}, q = {q}\n\n")
-
-  eq_signs = (m+5) * "="
-  file.write(f"{eq_signs} A {eq_signs}\n")
-  file.write(str(A))
-
-  # format and print the f, d  matrices (for specified j, l, m values)
-  file.write(f"\n\n{eq_signs} F, D {eq_signs}\n")
-  
-  for x in range(len(F)):
-    dashes = (m+2) * "-"
-    file.write(f"\n{dashes} l = {x+2} {dashes}\n")
-    file.write(str(F[x]) + '\n\n' + str(D[x])+ '\n\n')
-  
-  file.close()
-  
-  # inform the user of the name of their file
-  print(f"\nYour file was saved: {file_name}\n")
-
-'''
-# Prompts user for an integer in the range (lower, upper) with exclusive bounds
-# until a valid integer is entered and returns this valid integer. 
-'''
-def check_input(str_x, lower, upper):
-  validInput = False
-  while not validInput:
-    try:
-      x = int(input(f"{str_x}: "))
-      if x > lower and x < upper:
-        validInput = True
-      else:
-        print(f"Enter an integer in the proper range: {lower} < {str_x} < {upper}.")
-    except ValueError:
-      print("Enter a positive integer.")
-  return x
-
-############################################################################################
-# Interactive portion of the program
-############################################################################################
-
-s = input("\nEnter string: ")
-ideal = True if input("\nUse ideal j? (Yes/No): ").lower() == 'yes' else False
-
-# case where user wants to select j, l, m parameters
-  # ensure that valid inputs are entered for j, l, m
-if not ideal:
-  print(f"\nEnter positive integers 2 <= j < m <= {len(s)}.")
-  j = check_input("j", 1, len(s))
-else:
-  j = 0
-  # l = check_input("l", j, len(s) + 1)
-print(f"\nEnter positive integer {j} < m <= {len(s)}.")
-m = check_input("m", j, len(s) + 1)
-# otherwise user wants to use ideal parameters
-
-"""
-
+  print("\nDONE\n")
 
 # write parameters and matrices to a text file
-s = "aaaaa"
-LCuS(s)
+# LCuS(seq)
+
+LCuS(seq)
