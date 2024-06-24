@@ -12,7 +12,8 @@ seq = ""
 for _ in range(random.randint(3, 30)):
   seq += str(random.choice(alphabet))
 
-test_A = test_file.test(seq)
+naive_A = test_file.naive(seq)
+optimized_A = test_file.optimized(seq)
 
 
 '''
