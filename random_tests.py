@@ -19,24 +19,24 @@ max_length = 10
 verbose = True 
 
 # number of test cases
-num_tests = 10
+num_tests = 100
 
 def test_verbose(seq):
   naive_A = n_file.naive(seq)
   test_A = t_file.optimized(seq)
   n = len(seq)
-  print(f"\nTesting {seq}\n")
+  # print(f"\nTesting {seq}\n")
   for m in range(1, n+1):
     for j in range(1, m):
       # compute h
       for i in range(1, j):
         for k in range(j, m):
           if naive_A[m, j, i, k] != test_A[m, j, i, k]:
-                        print(f"    error, should be {naive_A[m, j, i, k]}")
-                        print(f"    s_i = {seq[i-1]}, s_k = {seq[k-1]}, s_m = {seq[m-1]}")
-                        print(f"    gamma(m, i-1) = {n_file.gamma(m, i-1, seq)}");
-                        print(f"    gamma(m, k-1) = {n_file.gamma(m, k-1, seq)}");
-  print(f"Done {seq}")
+                  print(f"\n \t error: {seq}, A[{m}, {j}, {i}, {k}] = {test_A[m, j, i, k]} but should be {naive_A[m, j, i, k]}\n")
+                  print(f"    s_i = {seq[i-1]}, s_k = {seq[k-1]}, s_m = {seq[m-1]}")
+                  print(f"    gamma(m, i-1) = {n_file.gamma(m, i-1, seq)}");
+                  print(f"    gamma(m, k-1) = {n_file.gamma(m, k-1, seq)}");
+  print(f"Test done: {seq}")
 
 def test_concise(seq):
   skip = False
@@ -53,7 +53,7 @@ def test_concise(seq):
               if skip == False:
                 if naive_A[m, j, i, k] != test_A[m, j, i, k]:
                   skip = True
-                  print(f"\nFailed: {seq}, A[{m}, {j}, {i}, {k}] should be {naive_A[m, j, i, k]}\n")
+                  print(f"\nFailed: {seq}, A[{m}, {j}, {i}, {k}] = {test_A[m, j, i, k]} but should be {naive_A[m, j, i, k]}\n")
                   print(f"    s_i = {seq[i-1]}, s_k = {seq[k-1]}, s_m = {seq[m-1]}")
                   print(f"    gamma(m, i-1) = {n_file.gamma(m, i-1, seq)}");
                   print(f"    gamma(m, k-1) = {n_file.gamma(m, k-1, seq)}\n");
@@ -67,7 +67,10 @@ for _ in range(num_tests):
   for _ in range(random.randint(3, max_length)):
     seq += str(random.choice(alphabet))
 
-  test_concise(seq)
+  if verbose:
+    test_verbose(seq)
+  else: 
+    test_concise(seq)
 
 
 
