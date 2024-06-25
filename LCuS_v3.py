@@ -39,7 +39,10 @@ def optimized(seq):
                             maximum = max(maximum, h[m, j, i-1, k])
                         if gamma(m, k-1, seq) < k-1:
                             maximum = max(maximum, h[m, j, i, k-1])
-                        h[m, j, i, k] = maximum
+                        if maximum <= k:
+                             h[m, j, i, k] = 0
+                        else: 
+                            h[m, j, i, k] = maximum
                         #if h[m,j,i,k] > 0:
                             #print(f"h[{m}, {j}, {i}, {k}] = {h[m, j, i, k]}")
 

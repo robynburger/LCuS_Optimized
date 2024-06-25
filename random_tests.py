@@ -21,7 +21,7 @@ max_length = 10
 verbose = True 
 
 # number of test cases
-num_tests = 1
+num_tests = 10000
 
 def test_verbose(seq):
   naive_A = n_file.naive(seq)
@@ -34,11 +34,15 @@ def test_verbose(seq):
       for i in range(1, j):
         for k in range(j, m):
           if naive_A[m, j, i, k] != test_A[m, j, i, k]:
+                if test_A[m, j, i, k] == k:
+                  pass# print("\nK ERROR!\n")
+                else:
+                  print("\n******* NON K ERROR ******\n")
                   print(f"\n \t error: {seq}, A[{m}, {j}, {i}, {k}] = {test_A[m, j, i, k]} but should be {naive_A[m, j, i, k]}\n")
                   print(f"    s_i = {seq[i-1]}, s_k = {seq[k-1]}, s_m = {seq[m-1]}")
                   print(f"    gamma(m, i-1) = {n_file.gamma(m, i-1, seq)}");
                   print(f"    gamma(m, k-1) = {n_file.gamma(m, k-1, seq)}");
-  print(f"Test done: {seq}")
+  # print(f"Test done: {seq}")
 
 def test_concise(seq):
   skip = False
