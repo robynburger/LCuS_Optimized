@@ -1,6 +1,7 @@
 ## inspired by Adiesha's new definition from 6/24
 # File that will hold new algorithm with modified outputs 
 
+import sys
 import numpy as np
 import math
 
@@ -25,9 +26,9 @@ def optimized(seq):
                     if (gamma(m,i-1,seq) < 1 and gamma(m,k-1,seq) < j):
                         h[m, j, i, k] = m
                     elif (gamma(m, i-1, seq) < 1) ^ (gamma(m, k-1, seq) < j):
-                        h[m, j, i, k] = math.inf
+                        h[m, j, i, k] = sys.maxsize
                     elif i-1 < 1 ^ k-1 < j:
-                        h[m, j, i, k] = math.inf
+                        h[m, j, i, k] = sys.maxsize
                     else:
                         maximum = a[m-1, j, i-1, k-1]
                         if gamma(m, i-1, seq) < i-1:
@@ -44,7 +45,7 @@ def optimized(seq):
             for i in range(1, j):
                 for k in range(j, m):
                     if seq[i-1] == seq[k-1] == seq[m-1]:
-                        if h[m, j, i, k] == math.inf:
+                        if h[m, j, i, k] == sys.maxsize:
                             a[m, j, i, k] = m
                         else:
                             a[m, j, i, k] = h[m, j, i, k]

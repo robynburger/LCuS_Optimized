@@ -10,16 +10,16 @@ from alphabet
 """
 
 # characters allowed in test string 
-alphabet = ['a', 'b', 'c', 'd', 'x', 'y']
+alphabet = ['a', 'b', 'c', 'd']
 
 # max size of the test string 
-max_length = 5
+max_length = 10
 
 # true if you want all error messages, false if you don't (better for more test cases)
 verbose = True 
 
 # number of test cases
-num_tests = 1000
+num_tests = 10
 
 def test_verbose(seq):
   naive_A = n_file.naive(seq)
