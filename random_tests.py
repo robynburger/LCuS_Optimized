@@ -7,13 +7,15 @@ import random
 """
 Tests t_file against n_file, using randomly generated string made of letters 
 from alphabet
+
+to test one string, set num_tests = 1 and set seq equal to the sequence
 """
 
 # characters allowed in test string 
 alphabet = ['a', 'b', 'c', 'd']
 
 # max size of the test string 
-max_length = 1000
+max_length = 10
 
 # true if you want all error messages, false if you don't (better for more test cases)
 verbose = True 
@@ -68,11 +70,6 @@ for _ in range(num_tests):
     seq += str(random.choice(alphabet))
 
   if verbose:
-    test_verbose("dbdcbacbdc")
+    test_verbose(seq)
   else: 
     test_concise(seq)
-
-
-
-# idea: generates 30 random strings, testing each of them and outputting if they 
-# were successful or if there was an error and some information about the error
