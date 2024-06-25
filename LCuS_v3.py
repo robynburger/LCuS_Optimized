@@ -39,7 +39,7 @@ def optimized(seq):
                         #if h[m,j,i,k] > 0:
                             #print(f"h[{m}, {j}, {i}, {k}] = {h[m, j, i, k]}")
 
-            # compute a
+         # compute a
             # not checking if a_m-1^j(i, k) is properly defined b/c 
             # m starts at 1 and m = 0 is defined in tensor as 0 
             for i in range(1, j):
