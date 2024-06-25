@@ -13,13 +13,13 @@ from alphabet
 alphabet = ['a', 'b', 'c', 'd']
 
 # max size of the test string 
-max_length = 10
+max_length = 1000
 
 # true if you want all error messages, false if you don't (better for more test cases)
 verbose = True 
 
 # number of test cases
-num_tests = 100
+num_tests = 1
 
 def test_verbose(seq):
   naive_A = n_file.naive(seq)
@@ -68,7 +68,7 @@ for _ in range(num_tests):
     seq += str(random.choice(alphabet))
 
   if verbose:
-    test_verbose(seq)
+    test_verbose("dbdcbacbdc")
   else: 
     test_concise(seq)
 
