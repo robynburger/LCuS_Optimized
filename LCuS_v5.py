@@ -39,33 +39,25 @@ def test(seq):
             # compute h
             for k in range(1, l):
                 for i in range(1, k):
-                    maximum = a[m-1, i-1, k, l]
-                    if gamma(m, i-1, seq) < i-1:
-                        maximum = max(maximum, h[m, i-1, k, l])
-                    if gamma(m, k-1, seq) < k-1:
-                        maximum = max(maximum, h[m, i, k-1, l])
-                    h[m, i, k, l] = maximum
+                    if gamma(k, i-1, seq) == 0 or gamma(k, m-1, seq) < l:
+                        h[m, i, k, l] = k
+                    else:
+                        maximum = a[m-1, i-1, k, l]
+                        if gamma(m, i-1, seq) < i-1:
+                            maximum = max(maximum, h[m, i-1, k, l])
+                        if gamma(m, k-1, seq) < k-1:
+                            maximum = max(maximum, h[m, i, k-1, l])
+                        h[m, i, k, l] = maximum
                     if h[m, i, k, l] > 0:
                         print(f"h[{m}, {i}, {k}, {l}] = {h[m, i, k, l]}")
             
             # compute a
             for k in range(1, l):
                 for i in range(1, k):
-                    if gamma(m, i-1, seq) < 1 or gamma(m, k-1, seq) <= i:
-                        a[m, i, k, l] = a[m-1, i, k, l]
-                    else:
-                        a[m, i, k, l] = min(a[m-1, i, k, l], h[m, i, k, l])
                     if seq[i-1] == seq[k-1] == seq[m-1]:
-                        if gamma(m, i-1, seq) < 1 or gamma(m, k-1, seq) <= i:
-                            a[m, i, k, l] = m
-                        else:
-                            a[m, i, k, l] = h[m, i, k, l]
-                    elif seq[i-1] == seq[m-1]:
-                        if gamma(m, k-1, seq) >= i+1:
-                            a[m, i, k, l] = max(a[m, i, k, l], a[m, i, gamma(m, k-1, seq), l])
-                    elif seq[k-1] == seq[m-1]:
-                        if gamma(m, i-1, seq) >= 1:
-                            a[m, i, k, l] = max(a[m, i, k, l], a[m, gamma(m, i-1, seq), k, l])
+                        a[m, i, k, l] = h[m, i, k, l]
+                    else:
+                        a[m, i, k, l] = min(a[m, i, k-1, l], h[m, i, k, l])
                     
                     print(f"a[{m}, {i}, {k}, {l}] = {a[m, i, k, l]}")
                     if a[m, i, k, l] != A[m, i, k, l]:
