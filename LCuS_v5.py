@@ -42,14 +42,14 @@ def test(seq):
                     if gamma(k, i-1, seq) == 0 or gamma(k, m-1, seq) < l:
                         h[m, i, k, l] = k
                     else:
-                        maximum = a[m-1, i-1, k, l]
-                        if gamma(m, i-1, seq) < i-1:
+                        maximum = a[m-1, i-1, k-1, l]
+                        if gamma(k, i-1, seq) < i-1:
                             maximum = max(maximum, h[m, i-1, k, l])
-                        if gamma(m, k-1, seq) < k-1:
-                            maximum = max(maximum, h[m, i, k-1, l])
+                        if gamma(k, m-1, seq) < m-1:
+                            maximum = max(maximum, h[m-1, i, k, l])
                         h[m, i, k, l] = maximum
-                    if h[m, i, k, l] > 0:
-                        print(f"h[{m}, {i}, {k}, {l}] = {h[m, i, k, l]}")
+                    # if h[m, i, k, l] > 0:
+                        # print(f"h[{m}, {i}, {k}, {l}] = {h[m, i, k, l]}")
             
             # compute a
             for k in range(1, l):
