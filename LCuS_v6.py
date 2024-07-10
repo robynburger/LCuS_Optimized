@@ -56,12 +56,12 @@ def test(seq):
             # compute a
             for i in range(1, j):
                 for k in range(j, m):
-                    if seq[k-1] == seq[m-1] and gamma(m, i-1, seq) >= 1:
+                    if seq[k-1] == seq[m-1] and seq[i-1] != seq[m-1] and gamma(m, i-1, seq) >= 1:
                         a[m, i, j, k] = a[m, gamma(m, i-1, seq), j, k]
-                    elif seq[i-1] == seq[m-1] and gamma(m, k-1, seq) >= j:
+                    elif seq[i-1] == seq[m-1] and seq[i-1] != seq[m-1] and gamma(m, k-1, seq) >= j:
                         a[m, i, j, k] = a[m-1, i, j, k]
                     elif seq[i-1] == seq[k-1] == seq[m-1]:
-                        if gamma(m, i-1, seq) < 1 and gamma(m, k-1, seq) < j:
+                        if gamma(m, i-1, seq) < 1 or gamma(m, k-1, seq) < j:
                             a[m, i, j, k] = m
                         else:
                             a[m, i, j, k] = h[m, i, j, k]
